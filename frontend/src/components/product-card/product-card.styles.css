@@ -1,0 +1,30 @@
+.product-card-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  margin: 10px;
+  width: 200px;
+  height: 350px;
+  padding: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  cursor: pointer;
+}
+
+.product-card-container img {
+  width: auto;
+  height: auto;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.product-card-details {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.product-card-details .product-name {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}

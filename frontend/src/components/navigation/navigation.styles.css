@@ -1,0 +1,14 @@
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid black;
+}
+
+.navigation-bar .cart-icon {
+  margin-left: auto;
+  cursor: pointer;
+  padding: 10px;
+}
