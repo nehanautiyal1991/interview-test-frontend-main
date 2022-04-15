@@ -1,43 +1,64 @@
+import { useState, useEffect, FC, ReactElement } from 'react';
 import { useContext } from 'react';
-
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import { addToCart, removeFromCart } from './redux/action/cartActions';
+import { fetchProducts } from './redux/action/productActions';
+import { Drawer } from '@mui/material';
 import { CartContext } from './cart-context';
-
+import Grid from '@mui/material/Grid';
 import Cart from './components/cart/cart';
 import ProductCard from './components/product-card/product-card';
 import Navigation from './components/navigation/navigation';
+import { IProductItem, ICartItem } from './types/products';
 
 import './App.css';
 
-// REPLACE WITH API FETCHED ITEMS
-const TEMPORARY_ITEMS = [
-  {
-    id: 1,
-    name: 'Hat',
-    description:
-      'Fashion moves so quickly that, unless you have a strong point of view, you can lose integrity.',
-    imageSrc:
-      'https://media.istockphoto.com/photos/hat-on-white-background-picture-id526131500?b=1&k=20&m=526131500&s=170667a&w=0&h=TVhckgzmxLZ6b1V74eel7XbFy73tldESzBcH0ZG6g0c=',
-  },
-  {
-    id: 2,
-    name: 'Shirt',
-    description: 'Fashion never stops. There is always the new project, the new opportunity.',
-    imageSrc:
-      'https://media.istockphoto.com/photos/blank-white-tshirt-front-with-clipping-path-picture-id482948743?b=1&k=20&m=482948743&s=170667a&w=0&h=DetzN8rTsgQDTyBDSWvc7gUNz0gae0CUQecM-KNN3WY=',
-  },
-];
+const App: FC = (): ReactElement => {
+  const { isOpen, setIsOpen } = useContext(CartContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+  const products = useSelector((state: RootStateOrAny) => state.products);
+  const cart = useSelector((state: RootStateOrAny) => state.cart);
 
-const App = () => {
-  const { isOpen } = useContext(CartContext);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
+  const handleAddToCart = (clickedItem: ICartItem) => {
+    dispatch(addToCart(clickedItem));
+  };
+
+  const handleRemoveFromCart = (clickedItem: ICartItem) => {
+    dispatch(removeFromCart(clickedItem));
+  };
+
+  if (isLoading) return <h3>Loading....</h3>;
+
+  if (error) return <h3>Something went Wrong...</h3>;
 
   return (
     <div className="App">
       <Navigation />
-      {isOpen ? <Cart /> : null}
+
+      <Drawer anchor="right" open={isOpen} onClose={() => setIsOpen(!isOpen)}>
+        <div style={{ width: 400 }}>
+          <Cart
+            cartItems={cart}
+            addToCart={handleAddToCart}
+            removeFromCart={handleRemoveFromCart}
+          />
+        </div>
+      </Drawer>
+
       <div className="products-listing">
-        {TEMPORARY_ITEMS.map((productItem) => (
-          <ProductCard key={productItem.id} product={productItem} />
-        ))}
+        <Grid container spacing={2} flexDirection="column">
+          {products?.map((item: IProductItem) => (
+            <Grid item key={item.id}>
+              <ProductCard key={item.id} product={item} handleAddToCart={handleAddToCart} />
+            </Grid>
+          ))}
+        </Grid>
       </div>
     </div>
   );

@@ -1,28 +1,44 @@
 import { FC, ReactElement } from 'react';
-
+import { ICartItem } from '../../types/products';
 import './cart-item.styles.css';
 
-export interface ICartItem {
-  name: string;
-  imageSrc: string;
-  quantity: number;
-  price: number;
+interface Props {
+  item: ICartItem;
+  addToCart: (clickedItem: ICartItem) => void;
+  removeFromCart: (clickedItem: ICartItem) => void;
 }
 
-interface ICartItemProps {
-  cartItem: ICartItem;
-}
+const CartItem: FC<Props> = ({ item, addToCart, removeFromCart }): ReactElement => {
+  const { id, name, defaultImage: imageSrc } = item.product;
+  const { id: variantId, image, priceCents } = item.variants;
 
-const CartItem: FC<ICartItemProps> = ({ cartItem }): ReactElement => {
-  const { name, imageSrc, quantity, price } = cartItem;
   return (
     <div className="cart-item-container">
-      <img src={imageSrc} />
+      <img src={imageSrc} alt={name} />
       <div className="cart-item-details">
         <span>{name} </span>
-        <span> Quantity: {quantity} </span>
-        <span> price: ${price.toFixed(2)} </span>
+        <span> Quantity: {item.quantity} </span>
+        <span> Price: ${priceCents.toFixed(2)} Each</span>
+        <span> Variant</span>
+        <div className="cart-item-variant-container">
+          <img src={image} alt={image} />
+          <div className="cart-item-option-container">
+            {item.variants.selectableOptions.map((item) => (
+              <span key={item.value}>
+                {item.type}: {item.value}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
+      <button className="cart-quantity-button" onClick={() => removeFromCart(item)}>
+        -
+      </button>
+      <h3>{item.quantity}</h3>
+
+      <button className="cart-quantity-button" onClick={() => addToCart(item)}>
+        +
+      </button>
     </div>
   );
 };

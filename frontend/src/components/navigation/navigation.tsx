@@ -1,18 +1,22 @@
-import { useContext } from "react";
+import { FC, ReactElement } from 'react';
+import { useContext } from 'react';
+import { useSelector, RootStateOrAny } from 'react-redux';
+import { CartContext } from '../../cart-context';
+import './navigation.styles.css';
 
-import { CartContext } from "../../cart-context";
-
-import "./navigation.styles.css";
-
-const Navigation = () => {
+const Navigation: FC = (): ReactElement => {
   const { isOpen, setIsOpen } = useContext(CartContext);
-
   const toggleCart = () => setIsOpen(!isOpen);
+
+  const cart = useSelector((state: RootStateOrAny) => state.cart);
 
   return (
     <nav className="navigation-bar">
       <div className="cart-icon" onClick={toggleCart}>
         Cart
+        <span className="badge" color="error">
+          {cart.length}
+        </span>
       </div>
     </nav>
   );
