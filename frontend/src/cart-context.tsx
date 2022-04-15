@@ -1,4 +1,4 @@
-import { createContext, useState, FC } from "react";
+import { createContext, useState, FC } from 'react';
 
 interface ICartContext {
   isOpen: boolean;
@@ -12,6 +12,7 @@ export const CartContext = createContext<ICartContext>({
 
 export const CartProvider: FC = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const value = { isOpen, setIsOpen };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
