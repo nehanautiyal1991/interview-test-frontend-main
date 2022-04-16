@@ -1,6 +1,7 @@
 import { useState, useEffect, FC, ReactElement } from 'react';
 import { useContext } from 'react';
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelector } from './store';
 import { addToCart, removeFromCart } from './redux/action/cartActions';
 import { fetchProducts } from './redux/action/productActions';
 import { Drawer } from '@mui/material';
@@ -15,11 +16,9 @@ import './App.css';
 
 const App: FC = (): ReactElement => {
   const { isOpen, setIsOpen } = useContext(CartContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
   const dispatch = useDispatch();
-  const products = useSelector((state: RootStateOrAny) => state.products);
-  const cart = useSelector((state: RootStateOrAny) => state.cart);
+  const products = useSelector((state) => state.products);
+  const cart = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -32,10 +31,6 @@ const App: FC = (): ReactElement => {
   const handleRemoveFromCart = (clickedItem: ICartItem) => {
     dispatch(removeFromCart(clickedItem));
   };
-
-  if (isLoading) return <h3>Loading....</h3>;
-
-  if (error) return <h3>Something went Wrong...</h3>;
 
   return (
     <div className="App">

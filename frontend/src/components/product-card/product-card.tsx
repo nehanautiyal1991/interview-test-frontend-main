@@ -14,7 +14,7 @@ const ProductCard: FC<Props> = ({ product, handleAddToCart }): ReactElement => {
   const [selectedVariants, setSelectedVariants] = useState({});
   const [selectedProduct, setSelectedProduct] = useState({} as ICartItem);
   const [variantId, setVariantId] = useState<any>('');
-
+  console.log(product);
   const removeKey = (object: any, key: any) =>
     Object.entries(object)
       .filter(([k]) => k !== key)

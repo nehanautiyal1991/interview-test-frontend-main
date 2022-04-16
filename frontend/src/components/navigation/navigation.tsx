@@ -1,6 +1,6 @@
 import { FC, ReactElement } from 'react';
 import { useContext } from 'react';
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector } from '../../store';
 import { CartContext } from '../../cart-context';
 import './navigation.styles.css';
 
@@ -8,7 +8,7 @@ const Navigation: FC = (): ReactElement => {
   const { isOpen, setIsOpen } = useContext(CartContext);
   const toggleCart = () => setIsOpen(!isOpen);
 
-  const cart = useSelector((state: RootStateOrAny) => state.cart);
+  const cart = useSelector((state) => state.cart);
 
   return (
     <nav className="navigation-bar">

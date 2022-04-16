@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
     "downlevelIteration": true
   },
-  "include": ["src", "redux"]
+  "include": ["src", "redux", "src/store.ts"]
 }

@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 import { CartProvider } from './cart-context';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import store from './store';
 
 ReactDOM.render(
   <React.StrictMode>

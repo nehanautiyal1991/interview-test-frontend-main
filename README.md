@@ -113,5 +113,3 @@ Start frontend server with:
 cd ./frontend
 yarn && yarn start
 ```
-
-Test
