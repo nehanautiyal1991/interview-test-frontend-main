@@ -1,7 +1,9 @@
 import { FETCH_PRODUCTS } from '../action/types';
-const products = [];
+import { IProductItem } from '../../types/products';
 
-const productReducer = (state = products, action) => {
+const products: IProductItem[] = [];
+
+const productReducer = (state = products, action: { type: any; payload: IProductItem[] }) => {
   switch (action.type) {
     case FETCH_PRODUCTS:
       return [...state, ...action.payload];
