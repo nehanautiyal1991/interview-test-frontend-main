@@ -16,7 +16,7 @@ const Cart: FC<Props> = ({ cartItems, addToCart, removeFromCart }): ReactElement
   const closeCart = () => setIsOpen(false);
 
   const totalPrice = cartItems
-    .reduce((total, item) => total + item.variants.priceCents * item.quantity, 0)
+    .reduce((total, item) => total + (item.variants.priceCents * item.quantity) / 100, 0)
     .toFixed(2);
 
   return (

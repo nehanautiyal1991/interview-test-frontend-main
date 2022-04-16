@@ -11,14 +11,14 @@ interface Props {
 const CartItem: FC<Props> = ({ item, addToCart, removeFromCart }): ReactElement => {
   const { id, name, defaultImage: imageSrc } = item.product;
   const { id: variantId, image, priceCents } = item.variants;
-
+  const price = (priceCents / 100).toFixed(2);
   return (
     <div className="cart-item-container">
       <img src={imageSrc} alt={name} />
       <div className="cart-item-details">
         <span>{name} </span>
         <span> Quantity: {item.quantity} </span>
-        <span> Price: ${priceCents.toFixed(2)} Each</span>
+        <span> Price: ${price} Each</span>
         <span> Variant</span>
         <div className="cart-item-variant-container">
           <img src={image} alt={image} />
